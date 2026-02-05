@@ -77,8 +77,11 @@
 
   @include m(border) {
     @include e(item) {
+      border-radius: var(--sar-password-input-border-radius);
+
       &::after {
         @include border-surround(var(--sar-password-input-border-color));
+        border-radius: calc(var(--sar-password-input-border-radius) * 2);
       }
     }
   }
