@@ -178,11 +178,11 @@ function getInputValue(options: CascaderOption[]) {
 
 function getMayMultilineText(value: string | string[]) {
   if (Array.isArray(value)) {
-    const diff =
-      value.length -
-      (props.maxRows === -1 ? Number.MAX_SAFE_INTEGER : props.maxRows)
+    const maxRows =
+      props.maxRows === -1 ? Number.MAX_SAFE_INTEGER : props.maxRows
+    const diff = value.length - maxRows
 
-    const rows = value.slice(0, props.maxRows)
+    const rows = value.slice(0, maxRows)
 
     if (diff > 0) {
       rows.push(`+${diff}`)
