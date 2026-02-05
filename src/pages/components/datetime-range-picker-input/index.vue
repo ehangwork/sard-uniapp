@@ -12,6 +12,10 @@
     <doc-demo title="绑定值的格式">
       <DemoValueFormat />
     </doc-demo>
+
+    <doc-demo title="插槽">
+      <DemoSlot />
+    </doc-demo>
   </doc-page>
 </template>
 
@@ -21,6 +25,7 @@ import { onBackPress } from '@dcloudio/uni-app'
 import DemoBasic from './demo/Basic.vue'
 import DemoOutletFormat from './demo/OutletFormat.vue'
 import DemoValueFormat from './demo/ValueFormat.vue'
+import DemoSlot from './demo/Slot.vue'
 
 const { isLocked } = useCurrentPageLock()
 

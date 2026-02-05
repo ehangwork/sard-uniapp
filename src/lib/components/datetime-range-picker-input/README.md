@@ -36,6 +36,12 @@ import DatetimeRangePickerInput from 'sard-uniapp/components/datetime-range-pick
 
 @code('${DEMO_PATH}/datetime-range-picker-input/demo/ValueFormat.vue')
 
+### 插槽
+
+可以使用 `header` 插槽在顶部添加快捷选择按钮。
+
+@code('${DEMO_PATH}/datetime-range-picker-input/demo/Slot.vue')
+
 ## API
 
 ### DatetimeRangePickerInputProps
@@ -58,7 +64,7 @@ import DatetimeRangePickerInput from 'sard-uniapp/components/datetime-range-pick
 
 ### DatetimeRangePickerInputSlots
 
-继承 [`PopoutInputSlots`](./popout-input#PopoutInputSlots)
+继承 [`PopoutInputSlots`](./popout-input#PopoutInputSlots) 和 [`DatetimeRangePickerPopoutSlots`](./datetime-range-picker-popout#DatetimeRangePickerPopoutSlots)
 
 ### DatetimeRangePickerInputEmits
 

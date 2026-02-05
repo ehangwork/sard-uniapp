@@ -1,5 +1,6 @@
 <template>
   <view :class="datetimeRangePickerClass" :style="datetimeRangePickerStyle">
+    <slot name="header"></slot>
     <sar-tabs v-model:current="tabsCurrent" :list="tabsList" scrollable />
 
     <view :class="bem.e('container')">
@@ -28,6 +29,7 @@
         </view>
       </view>
     </view>
+    <slot name="footer"></slot>
   </view>
 </template>
 

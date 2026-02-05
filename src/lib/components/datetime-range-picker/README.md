@@ -42,6 +42,13 @@ import DatetimeRangePicker from 'sard-uniapp/components/datetime-range-picker/da
 | update:model-value | 选中的选项改变时触发 | (date: (Date \| string)[]) => void |
 | change             | 选中的选项改变时触发 | (date: (Date \| string)[]) => void |
 
+### DatetimeRangePickerSlots
+
+| 插槽                      | 描述           | 属性       |
+| ------------------------- | -------------- | ---------- |
+| header <sup>1.26.3+</sup> | 自定义头部内容 | () => void |
+| footer <sup>1.26.3+</sup> | 自定义底部内容 | () => void |
+
 ## 主题定制
 
 ### CSS 变量

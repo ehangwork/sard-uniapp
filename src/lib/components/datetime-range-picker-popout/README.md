@@ -56,3 +56,7 @@ import DatetimeRangePickerPopout from 'sard-uniapp/components/datetime-range-pic
 | leave <sup>1.22.1+</sup>           | 退场动画开始时触发           | () => void                         |
 | after-leave <sup>1.22.1+</sup>     | 退场动画结束时触发           | () => void                         |
 | leave-cancelled <sup>1.22.1+</sup> | 退场动画取消时触发           | () => void                         |
+
+### DatetimeRangePickerPopoutSlots
+
+继承 [`PopoutInputSlots`](./popout-input#PopoutInputSlots) 和 [`DatetimeRangePickerSlots`](./datetime-range-picker#DatetimeRangePickerSlots)

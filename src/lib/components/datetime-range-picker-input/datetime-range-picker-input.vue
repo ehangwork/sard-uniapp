@@ -43,7 +43,14 @@
       @change="onChange"
       @visible-hook="onVisibleHook"
       @confirm="onConfirm"
-    />
+    >
+      <template #header>
+        <slot name="header"></slot>
+      </template>
+      <template #footer>
+        <slot name="footer"></slot>
+      </template>
+    </sar-datetime-range-picker-popout>
   </sar-popout-input>
 </template>
 

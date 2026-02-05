@@ -12,7 +12,10 @@ export interface DatetimeRangePickerProps
 
 export const defaultDatetimeRangePickerProps = defaultConfig.datetimeRangePicker
 
-export interface DatetimeRangePickerSlots extends DatetimePickerSlots {}
+export interface DatetimeRangePickerSlots extends DatetimePickerSlots {
+  header?(props: Record<string, never>): any
+  footer?(props: Record<string, never>): any
+}
 
 export interface DatetimeRangePickerEmits {
   (e: 'update:model-value', date: (Date | string)[]): void

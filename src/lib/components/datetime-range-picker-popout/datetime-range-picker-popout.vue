@@ -21,7 +21,14 @@
         :value-format="valueFormat"
         :tabs="tabs"
         @change="onChange"
-      />
+      >
+        <template #header>
+          <slot name="header"></slot>
+        </template>
+        <template #footer>
+          <slot name="footer"></slot>
+        </template>
+      </sar-datetime-range-picker>
     </template>
   </sar-popout>
 </template>
