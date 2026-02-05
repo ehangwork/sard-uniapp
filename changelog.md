@@ -1,3 +1,17 @@
+## [1.26.3](https://github.com/sutras/sard-uniapp/compare/v1.26.2...v1.26.3) (2026-02-05)
+
+
+### Bug Fixes
+
+* **cascader-input:** 修复因max-rows设为-1导致被截断问题 ([363419a](https://github.com/sutras/sard-uniapp/commit/363419ab9817f3f827cf2c8115aa0dd93d3ff52d))
+
+
+### Features
+
+* **datetime-range-picker:** 新增插槽 ([b939e4e](https://github.com/sutras/sard-uniapp/commit/b939e4e33e7675589f685099724de3e419eb768b))
+
+
+
 ## [1.26.2](https://github.com/sutras/sard-uniapp/compare/v1.26.1...v1.26.2) (2026-01-23)
 
 
