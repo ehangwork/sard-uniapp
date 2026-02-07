@@ -3,8 +3,10 @@ import {
   computed,
   getCurrentInstance,
   MaybeRef,
+  MaybeRefOrGetter,
   onBeforeUnmount,
   onMounted,
+  toValue,
   unref,
   watch,
 } from 'vue'
@@ -12,8 +14,8 @@ import {
 interface IntersectionObserverOptions {
   root?: MaybeRef<string>
   selector?: MaybeRef<string>
-  offsetTop?: MaybeRef<number | undefined>
-  offsetBottom?: MaybeRef<number | undefined>
+  marginTop?: MaybeRefOrGetter<number | undefined>
+  marginBottom?: MaybeRefOrGetter<number | undefined>
   thresholds?: number[]
   initialRatio?: number
   observeAll?: boolean
@@ -30,8 +32,8 @@ export function useIntersectionObserver(
 
   const selector = computed(() => unref(options.selector))
   const root = computed(() => unref(options.root))
-  const offsetTop = computed(() => -(unref(options.offsetTop) || 0))
-  const offsetBottom = computed(() => -(unref(options.offsetBottom) || 0))
+  const marginTop = computed(() => toValue(options.marginTop) || 0)
+  const marginBottom = computed(() => toValue(options.marginBottom) || 0)
 
   const createObserver = () => {
     if (!selector.value) {
@@ -49,20 +51,20 @@ export function useIntersectionObserver(
 
     if (root.value) {
       observer?.relativeTo(root.value, {
-        top: offsetTop.value,
-        bottom: offsetBottom.value,
+        top: marginTop.value,
+        bottom: marginBottom.value,
       })
     } else {
       observer?.relativeToViewport({
-        top: offsetTop.value,
-        bottom: offsetBottom.value,
+        top: marginTop.value,
+        bottom: marginBottom.value,
       })
     }
 
     observer?.observe(selector.value, callback)
   }
 
-  watch([selector, root, offsetTop, offsetBottom], () => {
+  watch([selector, root, marginTop, marginBottom], () => {
     recreate()
   })
 

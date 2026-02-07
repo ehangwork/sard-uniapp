@@ -110,8 +110,8 @@ const { recreate } = useIntersectionObserver(
   {
     selector: `.${observeId}`,
     thresholds: [1],
-    offsetTop: toRef(() => props.offsetTop),
-    offsetBottom: toRef(() => props.offsetBottom),
+    marginTop: toRef(() => -(props.offsetTop || 0)),
+    marginBottom: toRef(() => -(props.offsetBottom || 0)),
   },
 )
 
@@ -134,9 +134,9 @@ if (context) {
       selector: `.${context.boxId}`,
       thresholds: [0],
       instance: context.instance,
-      offsetTop: toRef(() => (props.offsetTop || 0) + (height.value || 0)),
-      offsetBottom: toRef(
-        () => (props.offsetBottom || 0) + (height.value || 0),
+      marginTop: toRef(() => -(props.offsetTop || 0) - (height.value || 0)),
+      marginBottom: toRef(
+        () => -(props.offsetBottom || 0) - (height.value || 0),
       ),
     },
   )

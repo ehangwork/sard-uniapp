@@ -26,11 +26,31 @@ import LoadMore from 'sard-uniapp/components/load-more/load-more.vue'
 
 @code('${DEMO_PATH}/load-more/demo/Basic.vue')
 
-### 配合 PullDownRefresh 组件一起使用
+### 配合 useLoadMore 钩子函数使用 <sup>1.27+</sup>
+
+`LoadMore` 组件仅用于展示，状态管理和接口加载相关逻辑放在 `useLoadMore` 钩子函数里面。
+
+如果在 `scroll-view` 中使用触底加载，需要传递 `scrollViewSelector` 选项用于获取滚动盒子元素。
+
+`api` 选项是获取数据的函数，接收当前页码作为参数，需要返回是否加载完所有数据的布尔值。
+
+钩子函数返回的 `status, onLoadMore, onReload` 需绑定到 `LoadMore` 组件，`loadMoreId` 是 `LoadMore` 组件包裹元素的 `id`。
+
+@code('${DEMO_PATH}/load-more/demo/Hook.vue')
+
+### 配合 PullDownRefresh 组件使用 <sup>1.27+</sup>
 
 下面的案例代码展示了经典的“下拉刷新+上拉加载”功能实现。
 
+相比于单独使用 `onLoadMore`，当配合使用 `PullDownRefresh` 组件时，在触发下拉刷新事件时调用 `refresh` 函数，此时 `api` 函数参数二为 `true`，表示这是一个刷新请求，同时 `page` 会被传递为 1，可根据参数二来决定列表数据重置还是拼接。
+
 @code('${DEMO_PATH}/load-more/demo/WithRefresh.vue')
+
+### 页面触底加载 <sup>1.27+</sup>
+
+页面触底加载比 `scroll-view` 中的触底加载少了一个 `scrollViewSelector` 选项的配置。
+
+@code('${DEMO_PATH}/load-more/demo/FullPage.vue')
 
 ## API
 
@@ -66,6 +86,28 @@ import LoadMore from 'sard-uniapp/components/load-more/load-more.vue'
 
 ```ts
 type LoadMoreStatus = 'incomplete' | 'loading' | 'complete' | 'error'
+```
+
+### useLoadMore <sup>1.27+</sup>
+
+```ts
+function useLoadMore(options: UseLoadMoreOptions): {
+  status: Ref<LoadMoreStatus, LoadMoreStatus>
+  isLoading: ComputedRef<boolean>
+  onLoadMore: () => void
+  onReload: () => void
+  currentPage: Ref<number, number>
+  loadMoreId: string
+  refresh: () => Promise<void | null>
+}
+
+interface UseLoadMoreOptions {
+  api: (page: number, isRefresh: boolean) => Promise<boolean>
+  marginBottom?: MaybeRefOrGetter<number>
+  marginTop?: MaybeRefOrGetter<number>
+  scrollViewSelector?: string
+  disabled?: MaybeRefOrGetter<boolean>
+}
 ```
 
 ## 主题定制
