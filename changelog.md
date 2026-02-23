@@ -1,3 +1,13 @@
+# [1.27.0](https://github.com/sutras/sard-uniapp/compare/v1.26.3...v1.27.0) (2026-02-23)
+
+
+### Features
+
+* 新增 useLoadMore 钩子函数 ([fafa4ca](https://github.com/sutras/sard-uniapp/commit/fafa4ca70670ed7164d4657f6be1034361923288))
+* 新增select, select-popout, select-input组件 ([be7db12](https://github.com/sutras/sard-uniapp/commit/be7db12d484f87f66046ffabfed7ad0f57a6b96f))
+
+
+
 ## [1.26.3](https://github.com/sutras/sard-uniapp/compare/v1.26.2...v1.26.3) (2026-02-05)
 
 
