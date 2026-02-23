@@ -1,17 +1,14 @@
-import { type StyleValue } from 'vue'
 import { type CheckboxGroupProps } from '../checkbox/common'
 import { defaultConfig } from '../config'
 import { type TransitionHookEmits } from '../popup/common'
+import { type FormPopoutProps } from '../../use/useFormPopout'
 
-export interface CheckboxPopoutProps extends CheckboxGroupProps {
-  visible?: boolean
-  title?: string
-  popoutClass?: string
-  popoutStyle?: StyleValue
-  showCheckAll?: boolean
+export interface CheckboxPopoutProps
+  extends FormPopoutProps,
+    CheckboxGroupProps {
   searchable?: boolean
   filterPlaceholder?: string
-  resettable?: boolean
+  showCheckAll?: boolean
   iconPosition?: 'left' | 'right'
 }
 

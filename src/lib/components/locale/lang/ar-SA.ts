@@ -114,6 +114,11 @@ export default {
     fold: 'طي',
     unfold: 'فتح',
   },
+  select: {
+    selected: 'تم اختيار ${num} عنصر',
+    selectAll: 'اختر الكل',
+    clearSelect: 'مسح التحديد',
+  },
   signature: {
     confirm: 'موافق',
     clear: 'مسح',

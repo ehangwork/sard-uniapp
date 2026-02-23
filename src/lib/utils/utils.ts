@@ -1,4 +1,4 @@
-import { isPlainObject, isPrimitive } from './is'
+import { isPlainObject } from './is'
 
 /**
  * @description: 判断一个对象是否为看得到的空
@@ -282,19 +282,6 @@ export function splitUnit(target: number | string) {
 }
 
 export const noop = () => {}
-
-export function getMayPrimitiveOption(
-  option:
-    | string
-    | number
-    | boolean
-    | {
-        [key: PropertyKey]: any
-      },
-  key: string,
-) {
-  return isPrimitive(option) ? option : option[key]
-}
 
 export async function sleep(time: number) {
   return new Promise<void>((resolve) => {

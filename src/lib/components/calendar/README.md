@@ -25,7 +25,7 @@ import Calendar from 'sard-uniapp/components/calendar/calendar.vue'
 
 @code('${DEMO_PATH}/calendar/demo/Basic.vue')
 
-更多案例，请参考 [CalendarPopout 组件](./calendar-popout)
+更多案例，请参考 [CalendarPopout 组件](./calendar-popout)。
 
 ## API
 

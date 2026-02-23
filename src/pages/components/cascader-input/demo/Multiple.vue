@@ -7,7 +7,7 @@
         placeholder="请选择省市区"
         clearable
         :options="options"
-        :field-keys="fieldKeys"
+        :option-keys="optionKeys"
         :loading="loading"
         multiple
         all-levels
@@ -57,7 +57,7 @@ const value = ref<CascaderValue | undefined>([
   [440000, 440100, 440111],
 ])
 
-const fieldKeys = { label: 'name', value: 'code' }
+const optionKeys = { label: 'name', value: 'code' }
 
 const onChange = (value: any, selectedOptions: any) => {
   console.log('change', value, selectedOptions)

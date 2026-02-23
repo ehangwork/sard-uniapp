@@ -1,6 +1,7 @@
 import { type StyleValue } from 'vue'
 
 import { defaultConfig } from '../config'
+import { type OptionKeys } from '../../use'
 
 export type SegmentedOption =
   | {
@@ -9,18 +10,6 @@ export type SegmentedOption =
   | string
   | number
   | boolean
-
-export interface SegmentedOptionKeys {
-  label?: string
-  value?: string
-  disabled?: string
-}
-
-export const defaultOptionKeys = {
-  label: 'label',
-  value: 'value',
-  disabled: 'disabled',
-}
 
 export type SegmentedSize = 'small' | 'middle' | 'large'
 
@@ -34,7 +23,7 @@ export interface SegmentedProps {
   direction?: 'horizontal' | 'vertical'
   shape?: 'square' | 'round'
   options?: SegmentedOption[]
-  optionKeys?: SegmentedOptionKeys
+  optionKeys?: OptionKeys
   validateEvent?: boolean
 }
 

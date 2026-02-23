@@ -114,6 +114,11 @@ export default {
     fold: 'fold',
     unfold: 'unfold',
   },
+  select: {
+    selected: '${num} items selected',
+    selectAll: 'Select all',
+    clearSelect: 'Clear selection',
+  },
   signature: {
     confirm: 'Ok',
     clear: 'Clear',

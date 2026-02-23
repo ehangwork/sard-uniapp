@@ -101,14 +101,13 @@ import {
   type CascaderProps,
   type CascaderSlots,
   type CascaderEmits,
-  type CascaderFieldKeys,
   type CascaderStateNode,
-  defaultFieldKeys,
   defaultCascaderProps,
 } from './common'
 import { useCascaderTree } from './useCascaderTree'
 import { useCascaderTabs } from './useCascaderTabs'
 import { useTranslate } from '../locale'
+import { useOptionKeys } from '../../use'
 
 defineOptions({
   options: {
@@ -128,14 +127,9 @@ const bem = createBem('cascader')
 const { t } = useTranslate('cascader')
 
 // main
+const useOptionKeysReturn = useOptionKeys(props)
 
-const mergedFieldKeys = computed(() => {
-  return Object.assign(
-    {},
-    defaultFieldKeys,
-    props.fieldKeys,
-  ) as Required<CascaderFieldKeys>
-})
+const { aliasProps } = useOptionKeysReturn
 
 const innerValue = ref<typeof props.modelValue>()
 
@@ -154,8 +148,8 @@ const {
   getAncestors,
   initialize,
 } = useCascaderTree(props, {
-  fieldKeys: mergedFieldKeys,
   innerValue,
+  useOptionKeysReturn,
 })
 
 initialize()
@@ -251,7 +245,7 @@ const onNodeClick = async (node: CascaderStateNode, panelIndex: number) => {
   // legacy load
   const proxyOption = new Proxy(node.option, {
     set(target, p, newValue) {
-      if (p === mergedFieldKeys.value.children) {
+      if (p === aliasProps.value.children) {
         legacyLoadChildren.value = true
 
         node.loadStatus = 'loaded'

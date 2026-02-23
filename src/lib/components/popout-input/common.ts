@@ -29,7 +29,7 @@ export interface PopoutInputEmits {
 }
 
 export interface PopoutInputSlots {
-  prepend(): any
-  append(): any
-  arrow(): any
+  prepend?(): any
+  append?(): any
+  arrow?(): any
 }

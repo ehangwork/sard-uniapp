@@ -75,13 +75,9 @@ export function addSeparator(num: number | string, separator = ',', digit = 3) {
  * 生成唯一ID，可作为元素选择器，或者用于表示全局唯一字符串，仅限于当前应用生命周期
  */
 let counter = 0
-export function uniqid(prefix = '__sar_'): string {
-  return (
-    prefix +
-    (~~(Math.random() * 10e8)).toString(36) +
-    '-' +
-    (++counter).toString(36)
-  )
+const uid = 'sar-' + (~~(Math.random() * 10e8)).toString(36)
+export function uniqid(): string {
+  return uid + '-' + (++counter).toString(36)
 }
 
 export type ClassProp =

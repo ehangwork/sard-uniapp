@@ -128,7 +128,7 @@ import RadioGroup from 'sard-uniapp/components/radio-group/radio-group.vue'
 | direction             | 排列方向                              | 'horizontal' \| 'vertical' | 'vertical'                       |
 | validate-event        | 是否触发表单验证                      | boolean                    | true                             |
 | options               | 自动设置单选按钮                      | RadioGroupOption[]         | -                                |
-| option-keys           | 自定义 options 的 label、value 的字段 | RadioGroupOptionKeys       | {label: 'label', value: 'value'} |
+| option-keys           | 自定义 options 的 label、value 的字段 | OptionKeys                 | {label: 'label', value: 'value'} |
 
 ### RadioGroupOption
 
@@ -142,10 +142,10 @@ export type RadioGroupOption =
   | boolean
 ```
 
-### RadioGroupOptionKeys
+### OptionKeys
 
 ```ts
-export interface RadioGroupOptionKeys {
+export interface OptionKeys {
   label?: string
   value?: string
 }

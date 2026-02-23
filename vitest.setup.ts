@@ -1,12 +1,18 @@
 import { config } from '@vue/test-utils'
 import { h } from 'vue'
 
+const DivComponent = {
+  setup(_, { slots }) {
+    return () => h('div', null, slots.default?.())
+  },
+}
+
 config.global.stubs = {
-  ScrollView: h('div'),
-  PickerView: h('div'),
-  PickerViewColumn: h('div'),
-  RootPortal: h('div'),
-  PageContainer: h('div'),
+  ScrollView: DivComponent,
+  PickerView: DivComponent,
+  PickerViewColumn: DivComponent,
+  RootPortal: DivComponent,
+  PageContainer: DivComponent,
   teleport: true,
 }
 

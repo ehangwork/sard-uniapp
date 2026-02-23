@@ -3,7 +3,7 @@
     <sar-list-item>
       <sar-cascader
         :options="options"
-        :fieldKeys="{ children: 'nodeList' }"
+        :option-keys="{ children: 'nodeList' }"
         @select="onSelect"
         @change="onChange"
       />

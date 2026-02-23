@@ -1,33 +1,4 @@
 <template>
-  <sar-toast-agent />
-  <sar-dialog-agent />
-  <sar-notify-agent status-bar />
-  <sar-action-sheet-agent />
-  <sar-navbar
-    :title="title"
-    show-back
-    fixed
-    :flow="isAlipay"
-    status-bar
-    :root-style="{
-      '--sar-navbar-bg': navbarBg || 'var(--sar-body-bg)',
-      '--sar-navbar-item-color': 'var(--sar-body-color)',
-    }"
-    @back="onBack"
-  ></sar-navbar>
-
-  <!-- <template #left>
-    <sar-segmented
-      v-model="locale"
-      size="small"
-      :options="[
-        { label: '中文', value: 'zhCN' },
-        { label: '英文', value: 'enUS' },
-        { label: '阿语', value: 'arSA' },
-      ]"
-    />
-  </template> -->
-
   <view
     :class="classNames(bem.b(), bem.m('emphasis', emphasis))"
     :style="{
@@ -36,13 +7,41 @@
       paddingBottom: paddingBottom || '',
     }"
   >
+    <sar-toast-agent />
+    <sar-dialog-agent />
+    <sar-notify-agent status-bar />
+    <sar-action-sheet-agent />
+    <sar-navbar
+      :title="title"
+      show-back
+      fixed
+      :flow="isAlipay"
+      status-bar
+      :root-style="{
+        '--sar-navbar-bg': navbarBg || 'var(--sar-body-bg)',
+        '--sar-navbar-item-color': 'var(--sar-body-color)',
+      }"
+      @back="onBack"
+    >
+      <template #right>
+        <sar-popover :options="langOptions" @select="onSelect">
+          <sar-popover-reference>
+            <sar-navbar-item
+              :root-style="{ '--sar-navbar-item-color': 'var(--sar-primary)' }"
+              :text="localeText"
+            />
+          </sar-popover-reference>
+        </sar-popover>
+      </template>
+    </sar-navbar>
     <slot></slot>
   </view>
 </template>
 
 <script setup lang="ts">
 import { createBem } from '@/utils'
-import { classNames, isAlipay, useLocale } from 'sard-uniapp'
+import { classNames, isAlipay, MenuOption, useLocale } from 'sard-uniapp'
+import { computed } from 'vue'
 
 defineProps<{
   emphasis?: boolean
@@ -57,10 +56,22 @@ const bem = createBem('page')
 
 const locale = useLocale()!
 
-void locale
-
 const onBack = () => {
   uni.navigateBack()
+}
+
+const langOptions = [
+  { text: '中文', value: 'zhCN' },
+  { text: 'English', value: 'enUS' },
+  { text: 'العربية', value: 'arSA' },
+]
+
+const localeText = computed(
+  () => langOptions.find((item) => item.value === locale.value)!.text,
+)
+
+const onSelect = (option: MenuOption) => {
+  locale.value = option.value
 }
 </script>
 

@@ -83,7 +83,7 @@ import Segmented from 'sard-uniapp/components/segmented/segmented.vue'
 | direction      | 展示的方向                            | 'horizontal' \| 'vertical'     | 'horizontal'                     |
 | shape          | 形状                                  | 'square' \| 'round'            | 'square'                         |
 | options        | 选项的数据                            | SegmentedOption[]              | -                                |
-| option-keys    | 自定义 options 的 label、value 的字段 | SegmentedOptionKeys            | {label: 'label', value: 'value'} |
+| option-keys    | 自定义 options 的 label、value 的字段 | OptionKeys                     | {label: 'label', value: 'value'} |
 | validate-event | 是否触发表单验证                      | boolean                        | true                             |
 
 ### SegmentedOption
@@ -98,10 +98,10 @@ type SegmentedOption =
   | boolean
 ```
 
-### SegmentedOptionKeys
+### OptionKeys
 
 ```ts
-export interface SegmentedOptionKeys {
+export interface OptionKeys {
   label?: string
   value?: string
 }

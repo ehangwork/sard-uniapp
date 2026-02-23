@@ -114,6 +114,11 @@ export default {
     fold: '收起',
     unfold: '展开',
   },
+  select: {
+    selected: '已选择${num}项',
+    selectAll: '选择所有',
+    clearSelect: '清空选择',
+  },
   signature: {
     confirm: '确定',
     clear: '清空',

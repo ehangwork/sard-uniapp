@@ -1,5 +1,4 @@
 import {
-  type ComputedRef,
   type Ref,
   computed,
   inject,
@@ -11,7 +10,6 @@ import {
 import {
   cascaderOptionsContextSymbol,
   type CascaderValue,
-  type CascaderFieldKeys,
   type CascaderOption,
   type CascaderProps,
   type CascaderStateNode,
@@ -23,15 +21,25 @@ import {
   walkAncestor,
   walkNodes,
 } from '../../utils'
+import { type UseOptionKeysReturn } from '../../use'
 
 export function useCascaderTree(
   props: CascaderProps,
   config: {
-    fieldKeys: ComputedRef<Required<CascaderFieldKeys>>
+    useOptionKeysReturn: UseOptionKeysReturn
     innerValue: Ref<CascaderValue | undefined>
   },
 ) {
-  const { fieldKeys, innerValue } = config
+  const {
+    useOptionKeysReturn: {
+      getValue,
+      getLabel,
+      getDisabled,
+      getIsLeaf,
+      getChildren,
+    },
+    innerValue,
+  } = config
   const options = computed(() => props.options || [])
 
   const legacyLoadChildren = ref(false)
@@ -46,16 +54,15 @@ export function useCascaderTree(
     options: CascaderOption[],
     parent: CascaderStateNode | null,
   ) => {
-    const keys = fieldKeys.value
     return options.map((option): CascaderStateNode => {
-      const key = option[keys.value]
+      const key = getValue(option)
       const stateNode = reactive<CascaderStateNode>({
-        label: option[keys.label],
-        value: option[keys.value],
+        label: getLabel(option),
+        value: getValue(option),
         key,
-        disabled: !!option[keys.disabled],
+        disabled: !!getDisabled(option),
         parent,
-        isLeaf: !!option[keys.isLeaf],
+        isLeaf: !!getIsLeaf(option),
         depth: parent ? parent.depth + 1 : 0,
         indeterminate: false,
         checked: false,
@@ -64,7 +71,7 @@ export function useCascaderTree(
         option,
       })
 
-      const children = option[keys.children]
+      const children = getChildren(option)
 
       if (children) {
         stateNode.children = toStateNodes(children, stateNode)

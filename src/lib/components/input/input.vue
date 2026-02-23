@@ -94,8 +94,8 @@
       <input
         v-if="type !== 'textarea' && !showPassword"
         :class="classNames(bem.e('control'), bem.em('control', 'input'))"
-        :controlled="controlled"
         :enableNative="enableNative"
+        :controlled="controlled"
         :value="innerValue"
         :placeholder="placeholder"
         :placeholder-style="mergedPlaceholderStyle"

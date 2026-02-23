@@ -32,7 +32,7 @@ import LoadMore from 'sard-uniapp/components/load-more/load-more.vue'
 
 如果在 `scroll-view` 中使用触底加载，需要传递 `scrollViewSelector` 选项用于获取滚动盒子元素。
 
-`api` 选项是获取数据的函数，接收当前页码作为参数，需要返回是否加载完所有数据的布尔值。
+`request` 选项是获取数据的函数，接收当前页码作为参数，需要返回是否加载完所有数据的布尔值。
 
 钩子函数返回的 `status, onLoadMore, onReload` 需绑定到 `LoadMore` 组件，`loadMoreId` 是 `LoadMore` 组件包裹元素的 `id`。
 
@@ -42,7 +42,7 @@ import LoadMore from 'sard-uniapp/components/load-more/load-more.vue'
 
 下面的案例代码展示了经典的“下拉刷新+上拉加载”功能实现。
 
-相比于单独使用 `onLoadMore`，当配合使用 `PullDownRefresh` 组件时，在触发下拉刷新事件时调用 `refresh` 函数，此时 `api` 函数参数二为 `true`，表示这是一个刷新请求，同时 `page` 会被传递为 1，可根据参数二来决定列表数据重置还是拼接。
+相比于单独使用 `onLoadMore`，当配合使用 `PullDownRefresh` 组件时，在触发下拉刷新事件时调用 `refresh` 函数，此时 `request` 函数参数二为 `true`，表示这是一个刷新请求，同时 `page` 会被传递为 1，可根据参数二来决定列表数据重置还是拼接。
 
 @code('${DEMO_PATH}/load-more/demo/WithRefresh.vue')
 
@@ -102,7 +102,7 @@ function useLoadMore(options: UseLoadMoreOptions): {
 }
 
 interface UseLoadMoreOptions {
-  api: (page: number, isRefresh: boolean) => Promise<boolean>
+  request: (page: number, isRefresh: boolean) => Promise<boolean>
   marginBottom?: MaybeRefOrGetter<number>
   marginTop?: MaybeRefOrGetter<number>
   scrollViewSelector?: string

@@ -1,4 +1,3 @@
-import { type StyleValue } from 'vue'
 import {
   defaultPickerProps,
   type PickerSlots,
@@ -6,15 +5,9 @@ import {
 } from '../picker/common'
 import { defaultConfig } from '../config'
 import { type TransitionHookEmits } from '../popup/common'
+import { type FormPopoutProps } from '../../use/useFormPopout'
 
-export interface PickerPopoutProps extends PickerProps {
-  visible?: boolean
-  title?: string
-  validateEvent?: boolean
-  popoutClass?: string
-  popoutStyle?: StyleValue
-  resettable?: boolean
-}
+export interface PickerPopoutProps extends FormPopoutProps, PickerProps {}
 
 export const defaultPickerPopoutProps = () => ({
   ...defaultPickerProps(),

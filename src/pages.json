@@ -240,6 +240,9 @@
           "path": "list/index"
         },
         {
+          "path": "load-more/demo/FullPage"
+        },
+        {
           "path": "load-more/index"
         },
         {
@@ -351,6 +354,15 @@
           "path": "segmented/index"
         },
         {
+          "path": "select-input/index"
+        },
+        {
+          "path": "select-popout/index"
+        },
+        {
+          "path": "select/index"
+        },
+        {
           "path": "share-sheet/index"
         },
         {
@@ -429,6 +441,9 @@
           "path": "tree/demo/Accordion"
         },
         {
+          "path": "tree/demo/Async"
+        },
+        {
           "path": "tree/demo/Basic"
         },
         {
@@ -442,9 +457,6 @@
         },
         {
           "path": "tree/demo/Editable"
-        },
-        {
-          "path": "tree/demo/Async"
         },
         {
           "path": "tree/demo/Filter"

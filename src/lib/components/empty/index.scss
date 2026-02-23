@@ -31,4 +31,14 @@
     @include universal;
     margin-top: var(--sar-empty-extra-margin-top);
   }
+
+  @include m(small) {
+    @include e(icon) {
+      font-size: var(--sar-empty-small-icon-font-size);
+    }
+    @include e(description) {
+      margin-top: var(--sar-empty-small-description-margin-top);
+      font-size: var(--sar-empty-small-description-font-size);
+    }
+  }
 }

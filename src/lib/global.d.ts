@@ -104,6 +104,11 @@ declare module 'vue' {
     SarSearch: typeof import('./components/search/search.vue').default
     SarSegmented: typeof import('./components/segmented/segmented.vue').default
     SarSegmentedItem: typeof import('./components/segmented-item/segmented-item.vue').default
+    SarSelectInput: typeof import('./components/select-input/select-input.vue').default
+    SarSelect: typeof import('./components/select/select.vue').default
+    SarSelectOption: typeof import('./components/select-option/select-option.vue').default
+    SarSelectOptionGroup: typeof import('./components/select-option-group/select-option-group.vue').default
+    SarSelectPopout: typeof import('./components/select-popout/select-popout.vue').default
     SarShareSheet: typeof import('./components/share-sheet/share-sheet.vue').default
     SarSidebar: typeof import('./components/sidebar/sidebar.vue').default
     SarSidebarItem: typeof import('./components/sidebar-item/sidebar-item.vue').default

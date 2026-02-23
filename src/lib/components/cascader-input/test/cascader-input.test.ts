@@ -12,7 +12,7 @@ describe('CascaderInput', () => {
     const wrapper = mount(
       h(CascaderInput, {
         options: regionData,
-        fieldKeys: { label: 'name', value: 'code' },
+        optionKeys: { label: 'name', value: 'code' },
         modelValue: 440111,
       }),
     )

@@ -1,6 +1,1 @@
-export type {
-  PickerOptionKeys,
-  PickerOption,
-  PickerProps,
-  PickerEmits,
-} from './common'
+export type { PickerOption, PickerProps, PickerEmits } from './common'

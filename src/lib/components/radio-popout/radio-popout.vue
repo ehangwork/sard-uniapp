@@ -84,15 +84,14 @@ import SarList from '../list/list.vue'
 import SarListItem from '../list-item/list-item.vue'
 import SarIcon from '../icon/icon.vue'
 import SarInput from '../input/input.vue'
-import { classNames, createBem, getMayPrimitiveOption } from '../../utils'
+import { classNames, createBem } from '../../utils'
 import {
   type RadioPopoutProps,
   type RadioPopoutSlots,
   type RadioPopoutEmits,
   defaultRadioPopoutProps,
 } from './common'
-import { defaultOptionKeys } from '../radio/common'
-import { useScrollSide, useFormPopout } from '../../use'
+import { useScrollSide, useFormPopout, useOptionKeys } from '../../use'
 
 defineOptions({
   options: {
@@ -116,17 +115,14 @@ const bem = createBem('radio-popout')
 const { innerVisible, popoutValue, onChange, onConfirm, onVisibleHook } =
   useFormPopout(props, emit)
 
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
+const { getLabel, getValue, getDisabled } = useOptionKeys(props)
 
 const objectOptions = computed(() => {
   return props.options.map((option) => {
     return {
-      label: getMayPrimitiveOption(option, fieldKeys.value.label),
-      value: getMayPrimitiveOption(option, fieldKeys.value.value),
-      disabled:
-        getMayPrimitiveOption(option, fieldKeys.value.disabled) === true,
+      label: getLabel(option),
+      value: getValue(option),
+      disabled: getDisabled(option) === true,
     }
   })
 })

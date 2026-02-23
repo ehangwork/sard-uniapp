@@ -28,11 +28,11 @@ import {
   type SegmentedExpose,
   type SegmentedContext,
   defaultSegmentedProps,
-  defaultOptionKeys,
   segmentedContextSymbol,
 } from './common'
 import SarSegmentedItem from '../segmented-item/segmented-item.vue'
 import { useFormItemContext } from '../form'
+import { useOptionKeys } from '../../use'
 
 defineOptions({
   options: {
@@ -50,6 +50,8 @@ const emit = defineEmits<SegmentedEmits>()
 const bem = createBem('segmented')
 
 // main
+const { getLabel, getValue, getDisabled } = useOptionKeys(props)
+
 const formItemContext = useFormItemContext()
 
 const innerValue = ref(props.modelValue)
@@ -65,10 +67,6 @@ watch(
   },
 )
 
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
-
 const convertedOptions = computed(() => {
   return (props.options || []).map((option) => {
     return isPrimitive(option)
@@ -77,9 +75,9 @@ const convertedOptions = computed(() => {
           value: option,
         }
       : {
-          label: option[fieldKeys.value.label],
-          value: option[fieldKeys.value.value],
-          disabled: option[fieldKeys.value.disabled],
+          label: getLabel(option),
+          value: getValue(option),
+          disabled: getDisabled(option),
           icon: option.icon,
           iconFamily: option.iconFamily,
           iconSize: option.iconSize,

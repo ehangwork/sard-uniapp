@@ -11,7 +11,7 @@ import {
 
 export interface DatetimePickerInputProps
   extends DatetimePickerPopoutProps,
-    Omit<PopoutInputProps, 'modelValue' | 'loading'> {
+    Omit<PopoutInputProps, 'modelValue'> {
   outletFormat?: string
   valueOnClear?: () => any
 }

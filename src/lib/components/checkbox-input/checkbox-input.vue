@@ -1,18 +1,8 @@
 <template>
   <sar-popout-input
+    v-bind="popoutInputProps"
     v-model="inputValue"
-    :placeholder="placeholder"
-    :readonly="readonly"
-    :disabled="disabled"
-    :clearable="clearable"
     multiline
-    :root-class="rootClass"
-    :root-style="rootStyle"
-    :arrow="arrow"
-    :internal-arrow="$slots.arrow ? 1 : 0"
-    :internal-prepend="$slots.prepend ? 1 : 0"
-    :internal-append="$slots.append ? 1 : 0"
-    :input-props="inputProps"
     @clear="onClear"
     @click="show"
   >
@@ -26,23 +16,9 @@
       <slot name="arrow"></slot>
     </template>
     <sar-checkbox-popout
+      v-bind="omittedProps"
       v-model:visible="innerVisible"
       v-model="innerValue"
-      :title="title ?? placeholder"
-      :root-class="popoutClass"
-      :root-style="popoutStyle"
-      :size="size"
-      :type="type"
-      :checkedColor="checkedColor"
-      :direction="direction"
-      :options="options"
-      :option-keys="optionKeys"
-      :validate-event="validateEvent"
-      :show-check-all="showCheckAll"
-      :searchable="searchable"
-      :filter-placeholder="filterPlaceholder"
-      :resettable="resettable"
-      :icon-position="iconPosition"
       @change="onChange"
       @visible-hook="onVisibleHook"
       @confirm="onConfirm"
@@ -51,13 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import { watch, computed } from 'vue'
+import { watch } from 'vue'
 import SarPopoutInput from '../popout-input/popout-input.vue'
 import SarCheckboxPopout from '../checkbox-popout/checkbox-popout.vue'
-import {
-  type CheckboxGroupOptionKeys,
-  defaultOptionKeys,
-} from '../checkbox/common'
 import {
   type CheckboxInputProps,
   type CheckboxInputEmits,
@@ -65,12 +37,13 @@ import {
   type CheckboxInputSlots,
   defaultCheckboxInputProps,
 } from './common'
+import { isEmptyArray, isEmptyBinding } from '../../utils'
 import {
-  getMayPrimitiveOption,
-  isEmptyArray,
-  isEmptyBinding,
-} from '../../utils'
-import { usePopoutInput } from '../../use'
+  omitPopoutInputProps,
+  pickPopoutInputProps,
+  useOptionKeys,
+  usePopoutInput,
+} from '../../use'
 
 defineOptions({
   options: {
@@ -84,11 +57,17 @@ const props = withDefaults(
   defaultCheckboxInputProps(),
 )
 
-defineSlots<CheckboxInputSlots>()
+const slots = defineSlots<CheckboxInputSlots>()
 
 const emit = defineEmits<CheckboxInputEmits>()
 
 // main
+const { getLabel, getValue } = useOptionKeys(props)
+
+const popoutInputProps = pickPopoutInputProps(props, slots)
+
+const omittedProps = omitPopoutInputProps(props)
+
 const {
   innerVisible,
   innerValue,
@@ -99,20 +78,10 @@ const {
   onVisibleHook,
 } = usePopoutInput(props, emit)
 
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
-
-function getOutletText(
-  options: CheckboxInputOption[],
-  optionKeys: Required<CheckboxGroupOptionKeys>,
-  value: any[],
-) {
+function getOutletText(options: CheckboxInputOption[], value: any[]) {
   return options
-    .filter((option) =>
-      value.includes(getMayPrimitiveOption(option, optionKeys.value)),
-    )
-    .map((option) => getMayPrimitiveOption(option, optionKeys.label))
+    .filter((option) => value.includes(getValue(option)))
+    .map((option) => getLabel(option))
     .join(', ')
 }
 
@@ -120,7 +89,7 @@ function getInputValue() {
   if (isEmptyBinding(innerValue.value) || isEmptyArray(innerValue.value)) {
     return ''
   }
-  return getOutletText(props.options, fieldKeys.value, innerValue.value)
+  return getOutletText(props.options, innerValue.value)
 }
 
 watch(

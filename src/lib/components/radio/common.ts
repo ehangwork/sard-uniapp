@@ -1,5 +1,6 @@
 import { type StyleValue } from 'vue'
 import { defaultConfig } from '../config'
+import { type OptionKeys } from '../../use'
 
 export type IconType = 'circle' | 'record'
 
@@ -25,12 +26,6 @@ export interface RadioEmits {
   (e: 'click', event: any): void
 }
 
-export const defaultOptionKeys = {
-  label: 'label',
-  value: 'value',
-  disabled: 'disabled',
-}
-
 export type RadioGroupOption =
   | {
       [key: PropertyKey]: any
@@ -38,11 +33,6 @@ export type RadioGroupOption =
   | string
   | number
   | boolean
-
-export interface RadioGroupOptionKeys {
-  label?: string
-  value?: string
-}
 
 export interface RadioGroupProps {
   rootStyle?: StyleValue
@@ -56,7 +46,7 @@ export interface RadioGroupProps {
   direction?: 'horizontal' | 'vertical'
   validateEvent?: boolean
   options?: RadioGroupOption[]
-  optionKeys?: RadioGroupOptionKeys
+  optionKeys?: OptionKeys
 }
 
 export const defaultRadioGroupProps = defaultConfig.radioGroup

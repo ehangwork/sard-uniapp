@@ -1,17 +1,7 @@
 <template>
   <sar-popout-input
+    v-bind="popoutInputProps"
     v-model="inputValue"
-    :placeholder="placeholder"
-    :readonly="readonly"
-    :disabled="disabled"
-    :clearable="clearable"
-    :root-class="rootClass"
-    :root-style="rootStyle"
-    :arrow="arrow"
-    :internal-arrow="$slots.arrow ? 1 : 0"
-    :internal-prepend="$slots.prepend ? 1 : 0"
-    :internal-append="$slots.append ? 1 : 0"
-    :input-props="inputProps"
     @clear="onClear"
     @click="show"
   >
@@ -25,22 +15,9 @@
       <slot name="arrow"></slot>
     </template>
     <sar-radio-popout
+      v-bind="omittedProps"
       v-model:visible="innerVisible"
       v-model="innerValue"
-      :title="title ?? placeholder"
-      :root-class="popoutClass"
-      :root-style="popoutStyle"
-      :size="size"
-      :type="type"
-      :checkedColor="checkedColor"
-      :direction="direction"
-      :options="options"
-      :option-keys="optionKeys"
-      :validate-event="validateEvent"
-      :searchable="searchable"
-      :filter-placeholder="filterPlaceholder"
-      :resettable="resettable"
-      :icon-position="iconPosition"
       @change="onChange"
       @visible-hook="onVisibleHook"
       @confirm="onConfirm"
@@ -49,10 +26,9 @@
 </template>
 
 <script setup lang="ts">
-import { watch, computed } from 'vue'
+import { watch } from 'vue'
 import SarPopoutInput from '../popout-input/popout-input.vue'
 import SarRadioPopout from '../radio-popout/radio-popout.vue'
-import { type RadioGroupOptionKeys, defaultOptionKeys } from '../radio/common'
 import {
   type RadioInputProps,
   type RadioInputEmits,
@@ -60,8 +36,13 @@ import {
   type RadioInputSlots,
   defaultRadioInputProps,
 } from './common'
-import { getMayPrimitiveOption, isEmptyBinding, isNullish } from '../../utils'
-import { usePopoutInput } from '../../use'
+import { isEmptyBinding, isNullish } from '../../utils'
+import {
+  omitPopoutInputProps,
+  pickPopoutInputProps,
+  useOptionKeys,
+  usePopoutInput,
+} from '../../use'
 
 defineOptions({
   options: {
@@ -75,11 +56,17 @@ const props = withDefaults(
   defaultRadioInputProps(),
 )
 
-defineSlots<RadioInputSlots>()
+const slots = defineSlots<RadioInputSlots>()
 
 const emit = defineEmits<RadioInputEmits>()
 
 // main
+const { getLabel, getValue } = useOptionKeys(props)
+
+const popoutInputProps = pickPopoutInputProps(props, slots)
+
+const omittedProps = omitPopoutInputProps(props)
+
 const {
   innerVisible,
   innerValue,
@@ -90,28 +77,16 @@ const {
   onVisibleHook,
 } = usePopoutInput(props, emit)
 
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
-
-function getOutletText(
-  options: RadioInputOption[],
-  optionKeys: Required<RadioGroupOptionKeys>,
-  value: any,
-) {
-  const option = options.find(
-    (option) => getMayPrimitiveOption(option, optionKeys.value) === value,
-  )
-  return isNullish(option)
-    ? ''
-    : getMayPrimitiveOption(option, optionKeys.label)
+function getOutletText(options: RadioInputOption[], value: any) {
+  const option = options.find((option) => getValue(option) === value)
+  return isNullish(option) ? '' : getLabel(option)
 }
 
 function getInputValue() {
   if (isEmptyBinding(innerValue.value)) {
     return ''
   }
-  return getOutletText(props.options, fieldKeys.value, innerValue.value)
+  return getOutletText(props.options, innerValue.value)
 }
 
 watch(

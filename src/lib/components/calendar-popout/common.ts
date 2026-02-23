@@ -1,17 +1,9 @@
-import { type StyleValue } from 'vue'
 import { type CalendarProps } from '../calendar/common'
 import { defaultConfig } from '../config'
 import { type TransitionHookEmits } from '../popup/common'
+import { type FormPopoutProps } from '../../use/useFormPopout'
 
-export interface CalendarPopoutProps extends CalendarProps {
-  visible?: boolean
-  title?: string
-  showConfirm?: boolean
-  validateEvent?: boolean
-  popoutClass?: string
-  popoutStyle?: StyleValue
-  resettable?: boolean
-}
+export interface CalendarPopoutProps extends FormPopoutProps, CalendarProps {}
 
 export const defaultCalendarPopoutProps = () => ({
   ...defaultConfig.calendar,

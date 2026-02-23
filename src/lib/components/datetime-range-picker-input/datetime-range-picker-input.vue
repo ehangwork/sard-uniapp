@@ -1,17 +1,7 @@
 <template>
   <sar-popout-input
+    v-bind="popoutInputProps"
     v-model="inputValue"
-    :placeholder="placeholder"
-    :readonly="readonly"
-    :disabled="disabled"
-    :clearable="clearable"
-    :root-class="rootClass"
-    :root-style="rootStyle"
-    :arrow="arrow"
-    :internal-arrow="$slots.arrow ? 1 : 0"
-    :internal-prepend="$slots.prepend ? 1 : 0"
-    :internal-append="$slots.append ? 1 : 0"
-    :input-props="inputProps"
     @clear="onClear"
     @click="show"
   >
@@ -25,21 +15,10 @@
       <slot name="arrow"></slot>
     </template>
     <sar-datetime-range-picker-popout
-      keep-render
+      v-bind="omittedProps"
       v-model:visible="innerVisible"
       v-model="innerValue"
-      :title="title ?? placeholder"
-      :root-class="popoutClass"
-      :root-style="popoutStyle"
-      :type="type"
-      :min="min"
-      :max="max"
-      :filter="filter"
-      :formatter="formatter"
-      :value-format="valueFormat"
-      :tabs="tabs"
-      :validate-event="validateEvent"
-      :resettable="resettable"
+      keep-render
       @change="onChange"
       @visible-hook="onVisibleHook"
       @confirm="onConfirm"
@@ -59,7 +38,11 @@ import { watch } from 'vue'
 import SarPopoutInput from '../popout-input/popout-input.vue'
 import SarDatetimeRangePickerPopout from '../datetime-range-picker-popout/datetime-range-picker-popout.vue'
 import { formatDate, isString, parseDate } from '../../utils'
-import { usePopoutInput } from '../../use'
+import {
+  omitPopoutInputProps,
+  pickPopoutInputProps,
+  usePopoutInput,
+} from '../../use'
 import {
   type DatetimeRangePickerInputProps,
   type DatetimeRangePickerInputSlots,
@@ -81,11 +64,15 @@ const props = withDefaults(
   defaultDatetimeRangePickerInputProps(),
 )
 
-defineSlots<DatetimeRangePickerInputSlots>()
+const slots = defineSlots<DatetimeRangePickerInputSlots>()
 
 const emit = defineEmits<DatetimeRangePickerInputEmits>()
 
 // main
+const popoutInputProps = pickPopoutInputProps(props, slots)
+
+const omittedProps = omitPopoutInputProps(props)
+
 const {
   innerVisible,
   innerValue,

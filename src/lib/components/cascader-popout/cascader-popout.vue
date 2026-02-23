@@ -11,17 +11,8 @@
     <template #visible="{ already }">
       <sar-cascader
         v-if="already"
+        v-bind="omittedProps"
         :model-value="popoutValue"
-        :options="options"
-        :field-keys="fieldKeys"
-        :hint-text="hintText"
-        :change-on-select="changeOnSelect"
-        :label-render="labelRender"
-        :all-levels="allLevels"
-        :multiple="multiple"
-        :check-strictly="checkStrictly"
-        :lazy="lazy"
-        :load="load"
         @select="(option, tabIndex) => $emit('select', option, tabIndex)"
         @change="onChange"
       >
@@ -43,7 +34,7 @@ import {
   defaultCascaderPopoutProps,
 } from './common'
 import { isEmptyBinding } from '../../utils'
-import { useFormPopout } from '../../use'
+import { omitFormPopoutProps, useFormPopout } from '../../use'
 
 defineOptions({
   options: {
@@ -62,6 +53,8 @@ defineSlots<CascaderPopoutSlots>()
 const emit = defineEmits<CascaderPopoutEmits>()
 
 // main
+const omittedProps = omitFormPopoutProps(props)
+
 const { innerVisible, popoutValue, onChange, onConfirm, onVisibleHook } =
   useFormPopout(props, emit, {
     onChange() {

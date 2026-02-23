@@ -41,7 +41,7 @@ const bem = createBem('empty')
 
 // others
 const emptyClass = computed(() => {
-  return classNames(bem.b(), props.rootClass)
+  return classNames(bem.b(), bem.m(props.size), props.rootClass)
 })
 
 const emptyStyle = computed(() => {

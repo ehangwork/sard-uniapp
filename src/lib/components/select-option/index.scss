@@ -1,0 +1,59 @@
+@use '../style/base' as *;
+
+@include bem(select-option) {
+  @include b() {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    @include m-not(plain) {
+      padding: var(--sar-select-option-padding-y)
+        var(--sar-select-option-padding-x);
+
+      &::before {
+        @include border-top(var(--sar-border-color));
+        left: var(--sar-select-option-padding-x);
+        right: var(--sar-select-option-padding-x);
+      }
+
+      &:first-child::before {
+        display: none;
+      }
+    }
+
+    @include m(selected) {
+      color: var(--sar-select-option-selected-color);
+      font-weight: var(--sar-font-bold);
+
+      @include e(icon) {
+        display: flex;
+      }
+    }
+
+    @include m(disabled) {
+      @include disabled-text;
+    }
+
+    @include m-not(disabled, plain) {
+      &:active {
+        background: var(--sar-select-option-active-bg);
+      }
+    }
+  }
+
+  @include e(label) {
+    flex: 1;
+    min-width: 0;
+    word-break: break-all;
+    font-size: var(--sar-select-option-label-font-size);
+    line-height: var(--sar-select-option-label-line-height);
+  }
+
+  @include e(icon) {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-left: 16rpx;
+  }
+}

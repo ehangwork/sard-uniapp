@@ -38,7 +38,7 @@
   @include m(is-text) {
     padding-top: var(--sar-toast-text-padding-y);
     padding-bottom: var(--sar-toast-text-padding-y);
-    word-break: break-word;
+    word-break: break-all;
   }
 
   @include m(not-text) {

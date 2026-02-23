@@ -8,7 +8,7 @@ import { type LoadMoreStatus } from '../components/load-more'
 import { uniqid } from '../utils'
 
 export interface UseLoadMoreOptions {
-  api: (page: number, isRefresh: boolean) => Promise<boolean>
+  request: (page: number, isRefresh: boolean) => Promise<boolean>
   marginBottom?: MaybeRefOrGetter<number>
   marginTop?: MaybeRefOrGetter<number>
   scrollViewSelector?: string
@@ -24,7 +24,7 @@ export function useLoadMore(options: UseLoadMoreOptions) {
 
   const disabled = computed(() => toValue(options.disabled))
 
-  const { marginBottom, marginTop, scrollViewSelector } = options
+  const { marginBottom = 100, marginTop, scrollViewSelector } = options
 
   let firstTime = false
 
@@ -40,7 +40,7 @@ export function useLoadMore(options: UseLoadMoreOptions) {
     currentPage.value = page
 
     return (currentPromise = options
-      .api(page, isRefresh.value)
+      .request(page, isRefresh.value)
       .then((loaded) => {
         isRefresh.value = false
         status.value = loaded ? 'complete' : 'incomplete'
@@ -95,6 +95,7 @@ export function useLoadMore(options: UseLoadMoreOptions) {
       marginBottom,
       marginTop,
       thresholds: [0],
+      disabled,
     },
   )
 

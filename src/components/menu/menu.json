@@ -169,6 +169,18 @@
         "name": "segmented"
       },
       {
+        "title": "SelectInput 列表选择输入框",
+        "name": "select-input"
+      },
+      {
+        "title": "Select 列表选择",
+        "name": "select"
+      },
+      {
+        "title": "SelectPopout 列表选择弹出框",
+        "name": "select-popout"
+      },
+      {
         "title": "Signature 签名",
         "name": "signature"
       },

@@ -12,10 +12,8 @@
     <template #visible="{ already }">
       <sar-picker
         v-if="already"
+        v-bind="omittedProps"
         :model-value="popoutValue"
-        :columns="columns"
-        :option-keys="optionKeys"
-        :immediate-change="immediateChange"
         :internal-custom="
           isNumber(internalCustom) ? internalCustom : $slots.custom ? 1 : 0
         "
@@ -57,9 +55,8 @@ import {
   defaultPickerPopoutProps,
 } from './common'
 import { isEmptyArray, isEmptyBinding, isNumber } from '../../utils'
-import { defaultOptionKeys, getInitialValue } from '../picker/common'
-import { computed } from 'vue'
-import { useFormPopout } from '../../use'
+import { getInitialValue } from '../picker/common'
+import { omitFormPopoutProps, useFormPopout, useOptionKeys } from '../../use'
 
 defineOptions({
   options: {
@@ -78,9 +75,9 @@ defineSlots<PickerPopoutSlots>()
 const emit = defineEmits<PickerPopoutEmits>()
 
 // main
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
+const useOptionKeysReturn = useOptionKeys(props)
+
+const omittedProps = omitFormPopoutProps(props)
 
 const {
   innerVisible,
@@ -94,7 +91,7 @@ const {
     if (isEmptyBinding(popoutValue.value) || isEmptyArray(popoutValue.value)) {
       const [initialValue, selectedOptions] = getInitialValue(
         props.columns,
-        fieldKeys.value,
+        useOptionKeysReturn,
       )
       popoutValue.value = initialValue
       return [selectedOptions]

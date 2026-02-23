@@ -16,6 +16,7 @@ interface IntersectionObserverOptions {
   selector?: MaybeRef<string>
   marginTop?: MaybeRefOrGetter<number | undefined>
   marginBottom?: MaybeRefOrGetter<number | undefined>
+  disabled?: MaybeRefOrGetter<boolean | undefined>
   thresholds?: number[]
   initialRatio?: number
   observeAll?: boolean
@@ -34,9 +35,10 @@ export function useIntersectionObserver(
   const root = computed(() => unref(options.root))
   const marginTop = computed(() => toValue(options.marginTop) || 0)
   const marginBottom = computed(() => toValue(options.marginBottom) || 0)
+  const disabled = computed(() => toValue(options.disabled))
 
   const createObserver = () => {
-    if (!selector.value) {
+    if (!selector.value || disabled.value) {
       return
     }
 
@@ -64,7 +66,7 @@ export function useIntersectionObserver(
     observer?.observe(selector.value, callback)
   }
 
-  watch([selector, root, marginTop, marginBottom], () => {
+  watch([selector, root, marginTop, marginBottom, disabled], () => {
     recreate()
   })
 

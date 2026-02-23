@@ -10,7 +10,7 @@ import { defaultConfig } from '../config'
 
 export interface CalendarInputProps
   extends CalendarPopoutProps,
-    Omit<PopoutInputProps, 'modelValue' | 'loading'> {
+    Omit<PopoutInputProps, 'modelValue'> {
   outletFormat?: string
   valueOnClear?: () => any
 }

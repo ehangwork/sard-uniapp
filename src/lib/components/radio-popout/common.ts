@@ -1,16 +1,11 @@
-import { type StyleValue } from 'vue'
 import { type RadioGroupProps } from '../radio/common'
 import { defaultConfig } from '../config'
 import { type TransitionHookEmits } from '../popup/common'
+import { type FormPopoutProps } from '../../use/useFormPopout'
 
-export interface RadioPopoutProps extends RadioGroupProps {
-  visible?: boolean
-  title?: string
-  popoutClass?: string
-  popoutStyle?: StyleValue
+export interface RadioPopoutProps extends FormPopoutProps, RadioGroupProps {
   searchable?: boolean
   filterPlaceholder?: string
-  resettable?: boolean
   iconPosition?: 'left' | 'right'
 }
 

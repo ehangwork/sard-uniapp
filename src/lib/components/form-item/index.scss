@@ -33,8 +33,7 @@
     margin-right: var(--sar-form-item-label-margin-right);
     font-size: var(--sar-form-item-label-font-size);
     line-height: var(--sar-form-item-label-line-height);
-    word-wrap: break-word;
-    word-break: break-word;
+    word-break: break-all;
     gap: var(--sar-form-item-star-gap);
   }
 

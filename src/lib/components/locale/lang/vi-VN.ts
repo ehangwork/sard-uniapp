@@ -114,6 +114,11 @@ export default {
     fold: 'Thu gọn',
     unfold: 'Mở rộng',
   },
+  select: {
+    selected: 'Đã chọn ${num} mục',
+    selectAll: 'Chọn tất cả',
+    clearSelect: 'Xóa lựa chọn',
+  },
   signature: {
     confirm: 'Xác nhận',
     clear: 'Xóa',

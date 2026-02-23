@@ -91,11 +91,15 @@ export function usePopupEnter(callback: () => void) {
     watch(
       () => context.visibleState,
       () => {
-        if (context.visibleState === 'enter') {
+        if (context.visibleState === 'after-enter') {
           callback?.()
         }
       },
     )
+  }
+
+  return {
+    context,
   }
 }
 

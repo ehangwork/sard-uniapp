@@ -1,0 +1,17 @@
+@use '../style/base' as *;
+
+@include bem(select-option-group) {
+  @include e(label) {
+    position: relative;
+    padding: var(--sar-select-option-group-label-padding-y)
+      var(--sar-select-option-group-label-padding-x);
+    font-size: var(--sar-select-option-group-label-font-size);
+    line-height: var(--sar-select-option-group-label-line-height);
+    color: var(--sar-select-option-group-label-color);
+    background: var(--sar-select-option-group-label-bg);
+  }
+
+  @include e(content) {
+    position: relative;
+  }
+}

@@ -97,7 +97,8 @@ import Cascader from 'sard-uniapp/components/cascader/cascader.vue'
 | root-style                        | 组件根元素样式                                | StyleValue                                                                  | -                |
 | model-value (v-model)             | 选中项的值                                    | CascaderValue                                                               | -                |
 | options                           | 可选项数据源                                  | CascaderOption[]                                                            | []               |
-| field-keys                        | 自定义 `options` 中的字段                     | CascaderFieldKeys                                                           | defaultFieldKeys |
+| field-keys                        | 自定义 `options` 中的字段                     | OptionKeys                                                                  | defaultOptonKeys |
+| option-keys <sup>1.27+</sup>      | 自定义 `options` 中的字段，同 `field-keys`    | OptionKeys                                                                  | defaultOptonKeys |
 | hint-text                         | 未选中时的提示文案                            | string                                                                      | '请选择'         |
 | label-render                      | 自定义可选项渲染                              | (option: CascaderOption) => string                                          | -                |
 | change-on-select <sup>1.14+</sup> | 点击每级选项都会触发变化                      | boolean                                                                     | false            |
@@ -144,10 +145,10 @@ interface CascaderOption {
 }
 ```
 
-### CascaderFieldKeys
+### OptionKeys
 
 ```ts
-interface CascaderFieldKeys {
+interface OptionKeys {
   label?: string
   value?: string
   disabled?: string
@@ -156,10 +157,10 @@ interface CascaderFieldKeys {
 }
 ```
 
-### defaultFieldKeys
+### defaultOptonKeys
 
 ```ts
-const defaultFieldKeys: CascaderFieldKeys = {
+const defaultOptonKeys: OptionKeys = {
   label: 'label',
   value: 'value',
   disabled: 'disabled',

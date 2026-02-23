@@ -11,7 +11,7 @@ import {
 
 export interface DatetimeRangePickerInputProps
   extends DatetimeRangePickerPopoutProps,
-    Omit<PopoutInputProps, 'modelValue' | 'loading'> {
+    Omit<PopoutInputProps, 'modelValue'> {
   outletFormat?: string
   valueOnClear?: () => any
 }

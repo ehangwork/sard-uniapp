@@ -7,7 +7,7 @@
         placeholder="请选择省市区"
         clearable
         :options="options"
-        :field-keys="fieldKeys"
+        :option-keys="optionKeys"
         :loading="loading"
         @change="onChange"
       />
@@ -43,7 +43,7 @@ setTimeout(() => {
 
 const value = ref<number | undefined>(440111)
 
-const fieldKeys = { label: 'name', value: 'code' }
+const optionKeys = { label: 'name', value: 'code' }
 
 const onChange = (value: any, selectedOptions: any) => {
   console.log('change', value, selectedOptions)

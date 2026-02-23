@@ -1,17 +1,9 @@
-import { type StyleValue } from 'vue'
 import { type CascaderOption, type CascaderProps } from '../cascader/common'
 import { defaultConfig } from '../config'
 import { type TransitionHookEmits } from '../popup/common'
+import { type FormPopoutProps } from '../../use/useFormPopout'
 
-export interface CascaderPopoutProps extends CascaderProps {
-  visible?: boolean
-  title?: string
-  showConfirm?: boolean
-  validateEvent?: boolean
-  popoutClass?: string
-  popoutStyle?: StyleValue
-  resettable?: boolean
-}
+export interface CascaderPopoutProps extends FormPopoutProps, CascaderProps {}
 
 export const defaultCascaderPopoutProps = defaultConfig.cascaderPopout
 

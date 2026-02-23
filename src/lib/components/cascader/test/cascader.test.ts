@@ -14,7 +14,7 @@ describe('Cascader', () => {
     const wrapper = mount(
       h(Cascader, {
         options: regionData,
-        fieldKeys: { label: 'name', value: 'code' },
+        optionKeys: { label: 'name', value: 'code' },
         modelValue: 440111,
       }),
     )
@@ -169,7 +169,7 @@ describe('Cascader', () => {
         Cascader,
         {
           options: regionData,
-          fieldKeys: { label: 'name', value: 'code' },
+          optionKeys: { label: 'name', value: 'code' },
         },
         {
           top: ({ tabIndex }: any) =>
@@ -265,7 +265,7 @@ describe('Cascader', () => {
     const wrapper = mount(
       h(Cascader, {
         options: regionData,
-        fieldKeys: { label: 'name', value: 'code' },
+        optionKeys: { label: 'name', value: 'code' },
         multiple: true,
         modelValue: [440106, 440111],
       }),
@@ -330,7 +330,7 @@ describe('Cascader', () => {
     const wrapper = mount(
       h(Cascader, {
         options: regionData,
-        fieldKeys: { label: 'name', value: 'code' },
+        optionKeys: { label: 'name', value: 'code' },
         multiple: true,
         allLevels: true,
         modelValue: [[440106], [440111]],
@@ -365,7 +365,7 @@ describe('Cascader', () => {
     const wrapper = mount(
       h(Cascader, {
         options: regionData,
-        fieldKeys: { label: 'name', value: 'code' },
+        optionKeys: { label: 'name', value: 'code' },
         multiple: true,
         checkStrictly: true,
         modelValue: [440106, 440111],

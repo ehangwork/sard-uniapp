@@ -1,0 +1,40 @@
+@use '../style/base' as *;
+
+@include bem(select) {
+  @include b() {
+    background: var(--sar-select-bg);
+  }
+
+  @include e(container) {
+    @include scroll-shadow;
+  }
+
+  @include e(search) {
+    padding: var(--sar-select-search-padding-y)
+      var(--sar-select-search-padding-x);
+  }
+
+  @include e(scroll) {
+    max-height: var(--sar-select-max-height);
+
+    @include m(filterable) {
+      height: var(--sar-select-max-height);
+    }
+  }
+
+  @include e(toolbar) {
+    display: flex;
+    align-items: center;
+    padding: var(--sar-select-toolbar-padding-y)
+      var(--sar-select-toolbar-padding-x);
+  }
+
+  @include e(num) {
+    font-size: var(--sar-text-base);
+    color: var(--sar-primary);
+  }
+
+  @include e(empty) {
+    padding-top: var(--sar-select-empty-margin-top);
+  }
+}

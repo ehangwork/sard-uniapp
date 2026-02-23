@@ -1,14 +1,39 @@
-import { ref, watch } from 'vue'
+import { type StyleValue, computed, ref, watch } from 'vue'
 import { useTwoWayVisible } from './useTwoWayVisible'
 import { useFormItemContext } from '../components/form'
 import { type TransitionHookName } from './useTransition'
 import { type TransitionHookEmits } from '../components/popup/common'
+import { omit } from '../utils'
 
 export interface UseFormPopoutProps {
   visible?: boolean
   modelValue?: any
   validateEvent?: boolean
   resettable?: boolean
+}
+
+export interface FormPopoutProps {
+  visible?: boolean
+  title?: string
+  popoutClass?: string
+  popoutStyle?: StyleValue
+  resettable?: boolean
+  validateEvent?: boolean
+  showConfirm?: boolean
+}
+
+export function omitFormPopoutProps(props: {} & FormPopoutProps) {
+  return computed(() =>
+    omit(props, [
+      'visible',
+      'title',
+      'popoutClass',
+      'popoutStyle',
+      'resettable',
+      'validateEvent',
+      'showConfirm',
+    ]),
+  )
 }
 
 export interface UseFormPopoutEmits extends TransitionHookEmits {

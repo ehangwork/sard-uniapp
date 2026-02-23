@@ -64,8 +64,7 @@
     flex: auto;
     font-size: var(--sar-list-item-title-font-size);
     line-height: var(--sar-list-item-title-line-height);
-    word-wrap: break-word;
-    word-break: break-word;
+    word-break: break-all;
   }
 
   @include e(description) {
@@ -74,8 +73,7 @@
     font-size: var(--sar-list-item-description-font-size);
     line-height: var(--sar-list-item-description-line-height);
     color: var(--sar-list-item-description-color);
-    word-wrap: break-word;
-    word-break: break-word;
+    word-break: break-all;
   }
 
   @include e(value) {
@@ -87,8 +85,7 @@
     line-height: var(--sar-list-item-value-line-height);
     color: var(--sar-list-item-value-color);
     text-align: right;
-    word-wrap: break-word;
-    word-break: break-word;
+    word-break: break-all;
   }
 
   @include e(arrow) {

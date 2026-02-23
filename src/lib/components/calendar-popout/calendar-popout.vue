@@ -18,22 +18,8 @@
     <template #visible="{ already }">
       <sar-calendar
         v-if="already"
+        v-bind="omittedProps"
         :model-value="popoutValue"
-        :type="type"
-        :min="min"
-        :max="max"
-        :current-date="currentDate"
-        :disabled-date="disabledDate"
-        :max-days="maxDays"
-        :over-max-days="overMaxDays"
-        :week-starts-on="weekStartsOn"
-        :formatter="formatter"
-        :allow-same-day="allowSameDay"
-        :start-date-text="startDateText"
-        :end-date-text="endDateText"
-        :same-date-text="sameDateText"
-        :several-months="severalMonths"
-        :value-format="valueFormat"
         @change="onChange"
       />
     </template>
@@ -49,7 +35,7 @@ import {
   type CalendarPopoutEmits,
   defaultCalendarPopoutProps,
 } from './common'
-import { useFormPopout } from '../../use'
+import { omitFormPopoutProps, useFormPopout } from '../../use'
 
 defineOptions({
   options: {
@@ -66,6 +52,8 @@ const props = withDefaults(
 const emit = defineEmits<CalendarPopoutEmits>()
 
 // main
+const omittedProps = omitFormPopoutProps(props)
+
 const { innerVisible, popoutValue, onChange, onConfirm, onVisibleHook } =
   useFormPopout(props, emit, {
     onChange() {

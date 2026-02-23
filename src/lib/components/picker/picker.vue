@@ -21,7 +21,7 @@
     >
       <picker-view-column v-for="(column, i) in renderedColumns" :key="i">
         <sar-picker-item v-for="(option, j) in column" :key="j">
-          {{ getLabelByOption(option) }}
+          {{ getLabel(option) }}
         </sar-picker-item>
       </picker-view-column>
     </picker-view>
@@ -45,17 +45,15 @@ import {
   type PickerProps,
   type PickerSlots,
   type PickerEmits,
-  type PickerOption,
-  defaultOptionKeys,
   getColumnsType,
   getIndexesByValue,
   getCascaderValidIndexes,
   getOptionsByIndexes,
   getMaySingleValueByOptions,
-  getValueOrLabelByOption,
   defaultPickerProps,
 } from './common'
 import SarPickerItem from '../picker-item/picker-item.vue'
+import { useOptionKeys } from '../../use'
 
 defineOptions({
   options: {
@@ -73,12 +71,12 @@ const emit = defineEmits<PickerEmits>()
 const bem = createBem('picker')
 
 // main
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
+const useOptionKeysReturn = useOptionKeys(props)
+
+const { aliasProps, getLabel } = useOptionKeysReturn
 
 const columnsType = computed(() => {
-  return getColumnsType(props.columns, fieldKeys.value)
+  return getColumnsType(props.columns, useOptionKeysReturn)
 })
 
 const innerValue = ref(props.modelValue)
@@ -97,7 +95,7 @@ const updateColumnIndexes = () => {
   const indexes = getIndexesByValue(
     toArray(innerValue.value),
     props.columns,
-    fieldKeys.value,
+    useOptionKeysReturn,
   )
   if (!arrayEqual(indexes, columnIndexes.value)) {
     columnIndexes.value = indexes
@@ -106,7 +104,7 @@ const updateColumnIndexes = () => {
 
 updateColumnIndexes()
 
-watch([innerValue, () => props.columns, fieldKeys], () => {
+watch([innerValue, () => props.columns, aliasProps], () => {
   if (!isEmptyBinding(innerValue.value) && !isEmptyArray(innerValue.value)) {
     updateColumnIndexes()
   }
@@ -148,7 +146,7 @@ const onChange = (event: any) => {
       const validIndexes = getCascaderValidIndexes(
         indexes,
         props.columns,
-        fieldKeys.value,
+        useOptionKeysReturn,
       )
       if (!arrayEqual(indexes, validIndexes)) {
         indexes = validIndexes
@@ -159,7 +157,7 @@ const onChange = (event: any) => {
   const selectedOptions = getOptionsByIndexes(
     indexes,
     props.columns,
-    fieldKeys.value,
+    useOptionKeysReturn,
   )
 
   if (!arrayEqual(indexes, columnIndexes.value)) {
@@ -168,7 +166,7 @@ const onChange = (event: any) => {
 
   const nextValue = getMaySingleValueByOptions(
     selectedOptions,
-    fieldKeys.value,
+    useOptionKeysReturn,
     props.columns,
   )
 
@@ -188,7 +186,7 @@ const getRenderedColumns = () => {
       return nestedToMulti(
         props.columns,
         toArray(innerValue.value),
-        fieldKeys.value,
+        useOptionKeysReturn,
       )
     default:
       return []
@@ -225,10 +223,6 @@ watch(
     }
   },
 )
-
-const getLabelByOption = (option: PickerOption) => {
-  return getValueOrLabelByOption(option, fieldKeys.value.label)
-}
 
 // others
 const pickerClass = computed(() => {

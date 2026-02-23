@@ -1,5 +1,6 @@
 import { type StyleValue } from 'vue'
 import { defaultConfig } from '../config'
+import { type OptionKeys } from '../../use'
 
 export type IconType = 'square' | 'circle'
 
@@ -31,12 +32,6 @@ export interface CheckboxEmits {
   (e: 'change', checked: boolean): void
 }
 
-export const defaultOptionKeys = {
-  label: 'label',
-  value: 'value',
-  disabled: 'disabled',
-}
-
 export type CheckboxGroupOption =
   | {
       [key: PropertyKey]: any
@@ -44,11 +39,6 @@ export type CheckboxGroupOption =
   | string
   | number
   | boolean
-
-export interface CheckboxGroupOptionKeys {
-  label?: string
-  value?: string
-}
 
 export interface CheckboxGroupProps {
   rootStyle?: StyleValue
@@ -62,7 +52,7 @@ export interface CheckboxGroupProps {
   direction?: 'horizontal' | 'vertical'
   validateEvent?: boolean
   options?: CheckboxGroupOption[]
-  optionKeys?: CheckboxGroupOptionKeys
+  optionKeys?: OptionKeys
 }
 
 export const defaultCheckboxGroupProps = defaultConfig.checkboxGroup

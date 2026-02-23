@@ -1,3 +1,4 @@
+import { UseOptionKeysReturn } from '../use'
 import { AnyObject } from './common'
 import { isPlainObject } from './is'
 
@@ -6,13 +7,27 @@ import { isPlainObject } from './is'
  */
 export function omit<T extends object, U extends keyof T>(
   object: T,
-  paths: U[],
+  keys: U[],
 ) {
   const newObj = {} as Omit<T, U>
-  Object.keys(object).forEach((key) => {
-    if (!paths.includes(key as U)) {
-      ;(newObj as any)[key] = object[key as U]
+  ;(Object.keys(object) as U[]).forEach((key) => {
+    if (!keys.includes(key)) {
+      ;(newObj as any)[key] = object[key]
     }
+  })
+  return newObj
+}
+
+/**
+ * 此方法创建一个对象，该对象由自己挑选的属性组成。
+ */
+export function pick<T extends object, U extends keyof T>(
+  object: T,
+  keys: U[],
+) {
+  const newObj = {} as Pick<T, U>
+  keys.forEach((key) => {
+    newObj[key] = object[key]
   })
   return newObj
 }
@@ -176,10 +191,7 @@ export function chainSet(
 export function nestedToMulti(
   nested: any[],
   values: (number | string)[],
-  fieldKeys: {
-    value: string
-    children: string
-  },
+  { getValue, getChildren }: UseOptionKeysReturn,
 ) {
   const columns: any[] = []
 
@@ -187,13 +199,13 @@ export function nestedToMulti(
     columns.push(list)
     const selectedValue = values[index]
     let selectedOption = list.find(
-      (option) => option[fieldKeys.value] === selectedValue,
+      (option) => getValue(option) === selectedValue,
     )
     if (!selectedOption) {
       selectedOption = list[0]
     }
     if (selectedOption) {
-      const nextList = selectedOption[fieldKeys.children]
+      const nextList = getChildren(selectedOption)
       if (Array.isArray(nextList)) {
         recurse(nextList, ++index)
       }

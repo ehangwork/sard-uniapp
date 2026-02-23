@@ -47,14 +47,15 @@ import Empty from 'sard-uniapp/components/empty/empty.vue'
 
 ### EmptyProps
 
-| 属性        | 描述           | 类型       | 默认值     |
-| ----------- | -------------- | ---------- | ---------- |
-| root-class  | 组件根元素类名 | string     | -          |
-| root-style  | 组件根元素样式 | StyleValue | -          |
-| description | 描述信息       | string     | '暂无数据' |
-| icon        | 自定义图标     | string     | -          |
-| icon-family | 图标字体       | string     | -          |
-| icon-size   | 图标大小       | string     | -          |
+| 属性                  | 描述           | 类型                | 默认值     |
+| --------------------- | -------------- | ------------------- | ---------- |
+| root-class            | 组件根元素类名 | string              | -          |
+| root-style            | 组件根元素样式 | StyleValue          | -          |
+| description           | 描述信息       | string              | '暂无数据' |
+| icon                  | 自定义图标     | string              | -          |
+| icon-family           | 图标字体       | string              | -          |
+| icon-size             | 图标大小       | string              | -          |
+| size <sup>1.27+</sup> | 组件大小       | 'small' \| 'medium' | 'medium'   |
 
 ### EmptySlots
 

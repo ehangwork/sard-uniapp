@@ -97,15 +97,19 @@ import SarList from '../list/list.vue'
 import SarListItem from '../list-item/list-item.vue'
 import SarInput from '../input/input.vue'
 import SarIcon from '../icon/icon.vue'
-import { classNames, createBem, getMayPrimitiveOption } from '../../utils'
+import { classNames, createBem } from '../../utils'
 import {
   type CheckboxPopoutProps,
   type CheckboxPopoutSlots,
   type CheckboxPopoutEmits,
   defaultCheckboxPopoutProps,
 } from './common'
-import { useScrollSide, useFormPopout, useIndeterminate } from '../../use'
-import { defaultOptionKeys } from '../checkbox/common'
+import {
+  useScrollSide,
+  useFormPopout,
+  useIndeterminate,
+  useOptionKeys,
+} from '../../use'
 
 defineOptions({
   options: {
@@ -126,20 +130,17 @@ const emit = defineEmits<CheckboxPopoutEmits>()
 const bem = createBem('checkbox-popout')
 
 // main
+const { getValue, getLabel, getDisabled } = useOptionKeys(props)
+
 const { innerVisible, popoutValue, onChange, onConfirm, onVisibleHook } =
   useFormPopout(props, emit)
-
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
 
 const objectOptions = computed(() => {
   return props.options.map((option) => {
     return {
-      label: getMayPrimitiveOption(option, fieldKeys.value.label),
-      value: getMayPrimitiveOption(option, fieldKeys.value.value),
-      disabled:
-        getMayPrimitiveOption(option, fieldKeys.value.disabled) === true,
+      label: getLabel(option),
+      value: getValue(option),
+      disabled: getDisabled(option) === true,
     }
   })
 })

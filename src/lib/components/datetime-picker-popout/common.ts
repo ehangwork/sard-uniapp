@@ -1,19 +1,14 @@
-import { type StyleValue } from 'vue'
 import {
   type DatetimePickerProps,
   type DatetimePickerSlots,
 } from '../datetime-picker/common'
 import { defaultConfig } from '../config'
 import { type TransitionHookEmits } from '../popup/common'
+import { type FormPopoutProps } from '../../use/useFormPopout'
 
-export interface DatetimePickerPopoutProps extends DatetimePickerProps {
-  visible?: boolean
-  title?: string
-  validateEvent?: boolean
-  popoutClass?: string
-  popoutStyle?: StyleValue
-  resettable?: boolean
-}
+export interface DatetimePickerPopoutProps
+  extends FormPopoutProps,
+    DatetimePickerProps {}
 
 export const defaultDatetimePickerPopoutProps = () => ({
   ...defaultConfig.datetimePicker,

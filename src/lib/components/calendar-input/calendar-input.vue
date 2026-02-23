@@ -1,17 +1,7 @@
 <template>
   <sar-popout-input
+    v-bind="popoutInputProps"
     v-model="inputValue"
-    :placeholder="placeholder"
-    :readonly="readonly"
-    :disabled="disabled"
-    :clearable="clearable"
-    :root-class="rootClass"
-    :root-style="rootStyle"
-    :arrow="arrow"
-    :internal-arrow="$slots.arrow ? 1 : 0"
-    :internal-prepend="$slots.prepend ? 1 : 0"
-    :internal-append="$slots.append ? 1 : 0"
-    :input-props="inputProps"
     @clear="onClear"
     @click="show"
   >
@@ -25,29 +15,9 @@
       <slot name="arrow"></slot>
     </template>
     <sar-calendar-popout
+      v-bind="omittedProps"
       v-model:visible="innerVisible"
       v-model="innerValue"
-      :title="title ?? placeholder"
-      :show-confirm="showConfirm"
-      :root-class="popoutClass"
-      :root-style="popoutStyle"
-      :type="type"
-      :min="min"
-      :max="max"
-      :current-date="currentDate"
-      :disabled-date="disabledDate"
-      :max-days="maxDays"
-      :over-max-days="overMaxDays"
-      :week-starts-on="weekStartsOn"
-      :formatter="formatter"
-      :allow-same-day="allowSameDay"
-      :start-date-text="startDateText"
-      :end-date-text="endDateText"
-      :same-date-text="sameDateText"
-      :several-months="severalMonths"
-      :value-format="valueFormat"
-      :validate-event="validateEvent"
-      :resettable="resettable"
       @change="onChange"
       @visible-hook="onVisibleHook"
       @confirm="onConfirm"
@@ -60,7 +30,11 @@ import { watch } from 'vue'
 import SarPopoutInput from '../popout-input/popout-input.vue'
 import SarCalendarPopout from '../calendar-popout/calendar-popout.vue'
 import { formatDate, isString, parseDate } from '../../utils'
-import { usePopoutInput } from '../../use'
+import {
+  omitPopoutInputProps,
+  pickPopoutInputProps,
+  usePopoutInput,
+} from '../../use'
 import { type CalendarType } from '../calendar/common'
 import { useTranslate } from '../locale'
 import {
@@ -82,11 +56,15 @@ const props = withDefaults(
   defaultCalendarInputProps(),
 )
 
-defineSlots<CalendarInputSlots>()
+const slots = defineSlots<CalendarInputSlots>()
 
 const emit = defineEmits<CalendarInputEmits>()
 
 // main
+const popoutInputProps = pickPopoutInputProps(props, slots)
+
+const omittedProps = omitPopoutInputProps(props)
+
 const {
   innerVisible,
   innerValue,

@@ -1,20 +1,14 @@
-import { type StyleValue } from 'vue'
 import {
   type DatetimeRangePickerProps,
   type DatetimeRangePickerSlots,
 } from '../datetime-range-picker/common'
 import { defaultConfig } from '../config'
 import { type TransitionHookEmits } from '../popup/common'
+import { type FormPopoutProps } from '../../use/useFormPopout'
 
 export interface DatetimeRangePickerPopoutProps
-  extends DatetimeRangePickerProps {
-  visible?: boolean
-  title?: string
-  validateEvent?: boolean
-  popoutClass?: string
-  popoutStyle?: StyleValue
-  resettable?: boolean
-}
+  extends FormPopoutProps,
+    DatetimeRangePickerProps {}
 
 export const defaultDatetimeRangePickerInputProps = () => ({
   ...defaultConfig.datetimeRangePicker,

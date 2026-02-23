@@ -43,7 +43,7 @@ const mockData = Array(35)
     name: `Name ${i + 1}`,
   }))
 
-const mockApi = async (page: number, pageSize = 10) => {
+const mockRequest = async (page: number, pageSize = 10) => {
   await sleep(500)
   const offset = (page - 1) * pageSize
   return {
@@ -78,8 +78,8 @@ const scrollViewId = uniqid()
 
 const { status, onLoadMore, onReload, refresh, loadMoreId } = useLoadMore({
   scrollViewSelector: `#${scrollViewId}`,
-  api: async (page, isRefresh) => {
-    return mockApi(page).then(({ list = [], total = 0 }) => {
+  request: async (page, isRefresh) => {
+    return mockRequest(page).then(({ list = [], total = 0 }) => {
       if (isRefresh) {
         listData.value = [...list]
       } else {

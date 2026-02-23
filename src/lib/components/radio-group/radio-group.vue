@@ -13,11 +13,11 @@
       <template v-if="options">
         <sar-radio
           v-for="option in options"
-          :key="getMayPrimitiveOption(option, fieldKeys.value)"
-          :value="getMayPrimitiveOption(option, fieldKeys.value)"
+          :key="getValue(option)"
+          :value="getValue(option)"
           :validate-event="false"
         >
-          {{ getMayPrimitiveOption(option, fieldKeys.label) }}
+          {{ getLabel(option) }}
         </sar-radio>
       </template>
     </slot>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, provide, toRef, reactive, computed } from 'vue'
+import { ref, watch, provide, toRef, reactive } from 'vue'
 import {
   type RadioGroupProps,
   type RadioGroupSlots,
@@ -33,16 +33,11 @@ import {
   type RadioContext,
   radioContextSymbol,
   defaultRadioGroupProps,
-  defaultOptionKeys,
 } from '../radio/common'
-import {
-  classNames,
-  stringifyStyle,
-  createBem,
-  getMayPrimitiveOption,
-} from '../../utils'
+import { classNames, stringifyStyle, createBem } from '../../utils'
 import { useFormItemContext } from '../form/common'
 import SarRadio from '../radio/radio.vue'
+import { useOptionKeys } from '../../use'
 
 defineOptions({
   options: {
@@ -63,11 +58,9 @@ const emit = defineEmits<RadioGroupEmits>()
 const bem = createBem('radio-group')
 
 // main
-const formItemContext = useFormItemContext()
+const { getLabel, getValue } = useOptionKeys(props)
 
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
+const formItemContext = useFormItemContext()
 
 const innerValue = ref(props.modelValue)
 

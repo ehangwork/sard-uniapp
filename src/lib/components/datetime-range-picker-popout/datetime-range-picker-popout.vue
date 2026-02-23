@@ -12,14 +12,8 @@
     <template #visible="{ already }">
       <sar-datetime-range-picker
         v-if="already"
+        v-bind="omittedProps"
         :model-value="popoutValue"
-        :type="type"
-        :min="min"
-        :max="max"
-        :filter="filter"
-        :formatter="formatter"
-        :value-format="valueFormat"
-        :tabs="tabs"
         @change="onChange"
       >
         <template #header>
@@ -49,7 +43,7 @@ import {
   getMinDate,
   normalizeRangeValue,
 } from '../datetime-picker/common'
-import { useFormPopout } from '../../use'
+import { omitFormPopoutProps, useFormPopout } from '../../use'
 
 defineOptions({
   options: {
@@ -68,6 +62,8 @@ defineSlots<DatetimeRangePickerPopoutSlots>()
 const emit = defineEmits<DatetimeRangePickerPopoutEmits>()
 
 // main
+const omittedProps = omitFormPopoutProps(props)
+
 const minDate = computed(() =>
   toDate(props.min || getMinDate(), props.valueFormat),
 )

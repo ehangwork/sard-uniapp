@@ -70,7 +70,7 @@ import Picker from 'sard-uniapp/components/picker/picker.vue'
 | root-class       | 组件根元素类名                                     | string                             | -                                                      |
 | root-style       | 组件根元素样式                                     | StyleValue                         | -                                                      |
 | columns          | 配置每一列的数据                                   | PickerOption[] \| PickerOption[][] | []                                                     |
-| option-keys      | 自定义 `columns` 结构中的字段                      | PickerOptionKeys                   | {label: 'label', value: 'value', children: 'children'} |
+| option-keys      | 自定义 `columns` 结构中的字段                      | OptionKeys                         | {label: 'label', value: 'value', children: 'children'} |
 | model-value      | 选中项的值                                         | any                                | -                                                      |
 | immediate-change | 是否在手指松开时立即触发 `update:model-value` 事件 | boolean                            | false                                                  |
 
@@ -98,10 +98,10 @@ type PickerOption =
   | string
 ```
 
-### PickerOptionKeys
+### OptionKeys
 
 ```tsx
-interface PickerOptionKeys {
+interface OptionKeys {
   label?: string
   value?: string
   children?: string

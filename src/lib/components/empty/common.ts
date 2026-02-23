@@ -8,6 +8,7 @@ export interface EmptyProps {
   icon?: string
   iconFamily?: string
   iconSize?: string
+  size?: 'small' | 'medium'
 }
 
 export const defaultEmptyProps = defaultConfig.empty

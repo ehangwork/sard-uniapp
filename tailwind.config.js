@@ -58,6 +58,12 @@ export default {
       white: 'white',
       black: 'black',
       base: 'var(--sar-border-color)',
+      primary: 'var(--sar-primary)',
+      secondary: 'var(--sar-secondary)',
+      success: 'var(--sar-success)',
+      info: 'var(--sar-info)',
+      warning: 'var(--sar-warning)',
+      danger: 'var(--sar-danger)',
     },
     fontSize: {
       xs: 'var(--sar-text-xs)',

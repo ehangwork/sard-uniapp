@@ -1,18 +1,7 @@
 <template>
   <sar-popout-input
+    v-bind="popoutInputProps"
     v-model="inputValue"
-    :placeholder="placeholder"
-    :readonly="readonly"
-    :disabled="disabled"
-    :clearable="clearable"
-    :loading="loading"
-    :root-class="rootClass"
-    :root-style="rootStyle"
-    :arrow="arrow"
-    :internal-arrow="$slots.arrow ? 1 : 0"
-    :internal-prepend="$slots.prepend ? 1 : 0"
-    :internal-append="$slots.append ? 1 : 0"
-    :input-props="inputProps"
     :multiline="multiple"
     @clear="onClear"
     @click="show"
@@ -27,28 +16,13 @@
       <slot name="arrow"></slot>
     </template>
     <sar-cascader-popout
+      v-bind="omittedProps"
       v-model:visible="innerVisible"
       v-model="innerValue"
-      :title="title ?? placeholder"
-      :show-confirm="showConfirm"
-      :root-class="popoutClass"
-      :root-style="popoutStyle"
-      :options="options"
-      :field-keys="fieldKeys"
-      :hint-text="hintText"
-      :change-on-select="changeOnSelect"
-      :label-render="labelRender"
-      :all-levels="allLevels"
-      :multiple="multiple"
-      :check-strictly="checkStrictly"
-      :lazy="lazy"
-      :load="load"
-      :validate-event="validateEvent"
-      :resettable="resettable"
-      @select="(option, tabIndex) => $emit('select', option, tabIndex)"
       @change="onChange"
       @visible-hook="onVisibleHook"
       @confirm="onConfirm"
+      @select="(option, tabIndex) => $emit('select', option, tabIndex)"
     >
       <template #top="{ tabIndex }">
         <slot name="top" :tab-index="tabIndex"></slot>
@@ -62,15 +36,18 @@ import { watch, computed, shallowRef, provide } from 'vue'
 import SarPopoutInput from '../popout-input/popout-input.vue'
 import SarCascaderPopout from '../cascader-popout/cascader-popout.vue'
 import {
-  type CascaderFieldKeys,
   type CascaderOption,
-  cascaderOptionsContextSymbol,
   type CascaderValue,
-  defaultFieldKeys,
+  cascaderOptionsContextSymbol,
   getSelectedOptionsByValue,
 } from '../cascader/common'
 import { isEmptyArray, isEmptyBinding, isNullish } from '../../utils'
-import { usePopoutInput } from '../../use'
+import {
+  omitPopoutInputProps,
+  pickPopoutInputProps,
+  useOptionKeys,
+  usePopoutInput,
+} from '../../use'
 import {
   type CascaderInputProps,
   type CascaderInputSlots,
@@ -90,11 +67,17 @@ const props = withDefaults(
   defaultCascaderInputProps(),
 )
 
-defineSlots<CascaderInputSlots>()
+const slots = defineSlots<CascaderInputSlots>()
 
 const emit = defineEmits<CascaderInputEmits>()
 
 // main
+const useOptionKeysReturn = useOptionKeys(props)
+
+const popoutInputProps = pickPopoutInputProps(props, slots)
+
+const omittedProps = omitPopoutInputProps(props)
+
 const {
   innerVisible,
   innerValue,
@@ -110,13 +93,7 @@ const {
   },
 })
 
-const fieldkeys = computed(() => {
-  return Object.assign(
-    {},
-    defaultFieldKeys,
-    props.fieldKeys,
-  ) as Required<CascaderFieldKeys>
-})
+const { getLabel } = useOptionKeysReturn
 
 const lazyOptions = shallowRef<CascaderOption[]>([])
 
@@ -133,12 +110,11 @@ const renderedOptions = computed(() => {
 function getOutletText(
   options: CascaderOption[],
   value: CascaderValue,
-  fieldKeys: Required<CascaderFieldKeys>,
 ): string | string[] {
   const selectedOptions = getSelectedOptionsByValue(
     options,
     value,
-    fieldKeys,
+    useOptionKeysReturn,
     props.multiple,
   )
 
@@ -148,8 +124,8 @@ function getOutletText(
 
   const labels = selectedOptions.map((option) => {
     return Array.isArray(option)
-      ? option.map((item) => item[fieldKeys.label] as string)
-      : (option[fieldKeys.label] as string)
+      ? option.map((item) => getLabel(item))
+      : getLabel(option)
   })
 
   return props.multiple
@@ -173,7 +149,7 @@ function getInputValue(options: CascaderOption[]) {
   if (!options || isEmptyArray(options)) {
     return getValueDisplay(innerValue.value)
   }
-  return getOutletText(options, innerValue.value, fieldkeys.value)
+  return getOutletText(options, innerValue.value)
 }
 
 function getMayMultilineText(value: string | string[]) {

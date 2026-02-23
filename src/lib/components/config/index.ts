@@ -71,6 +71,9 @@ import { type ResultProps } from '../result'
 import { type RotateVerifyProps } from '../rotate-verify'
 import { type SearchProps } from '../search'
 import { type SegmentedProps } from '../segmented'
+import { type SelectProps } from '../select'
+import { type SelectInputProps } from '../select-input'
+import { type SelectPopoutProps } from '../select-popout'
 import { type ShareSheetProps } from '../share-sheet'
 import { type SignatureProps } from '../signature'
 import { type SkeletonProps } from '../skeleton'
@@ -195,6 +198,9 @@ export interface ConfigOptions {
   rotateVerify?: InferDefaults<LooseRequired<RotateVerifyProps>>
   search?: InferDefaults<LooseRequired<SearchProps>>
   segmented?: InferDefaults<LooseRequired<SegmentedProps>>
+  select?: InferDefaults<LooseRequired<SelectProps>>
+  selectInput?: InferDefaults<LooseRequired<SelectInputProps>>
+  selectPopout?: InferDefaults<LooseRequired<SelectPopoutProps>>
   shareSheet?: InferDefaults<LooseRequired<ShareSheetProps>>
   signature?: InferDefaults<LooseRequired<SignatureProps>>
   skeleton?: InferDefaults<LooseRequired<SkeletonProps>>
@@ -592,6 +598,16 @@ export const defaultConfig: RequiredConfigOptions = {
     size: 'middle',
     shape: 'square',
     direction: 'horizontal',
+    validateEvent: true,
+  },
+  select: {
+    multipleLimit: 0,
+    threshold: 500,
+  },
+  selectInput: {
+    maxLabels: 10,
+  },
+  selectPopout: {
     validateEvent: true,
   },
   shareSheet: {

@@ -1,5 +1,4 @@
 export type {
-  CascaderFieldKeys,
   CascaderOption,
   CascaderProps,
   CascaderSlots,

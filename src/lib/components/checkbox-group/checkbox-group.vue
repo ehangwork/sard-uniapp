@@ -13,11 +13,11 @@
       <template v-if="options">
         <sar-checkbox
           v-for="option in options"
-          :key="getMayPrimitiveOption(option, fieldKeys.value)"
-          :value="getMayPrimitiveOption(option, fieldKeys.value)"
+          :key="getKey(getValue(option))"
+          :value="getValue(option)"
           :validate-event="false"
         >
-          {{ getMayPrimitiveOption(option, fieldKeys.label) }}
+          {{ getLabel(option) }}
         </sar-checkbox>
       </template>
     </slot>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, provide, toRef, reactive, computed } from 'vue'
+import { ref, watch, provide, toRef, reactive } from 'vue'
 import {
   type CheckboxGroupProps,
   type CheckboxGroupSlots,
@@ -33,16 +33,11 @@ import {
   type CheckboxContext,
   checkboxContextSymbol,
   defaultCheckboxGroupProps,
-  defaultOptionKeys,
 } from '../checkbox/common'
-import {
-  classNames,
-  createBem,
-  getMayPrimitiveOption,
-  stringifyStyle,
-} from '../../utils'
+import { classNames, createBem, stringifyStyle } from '../../utils'
 import { useFormItemContext } from '../form/common'
 import SarCheckbox from '../checkbox/checkbox.vue'
+import { useOptionKeys } from '../../use'
 
 defineOptions({
   options: {
@@ -63,11 +58,9 @@ const emit = defineEmits<CheckboxGroupEmits>()
 const bem = createBem('checkbox-group')
 
 // main
-const formItemContext = useFormItemContext()
+const { getLabel, getValue, getKey } = useOptionKeys(props)
 
-const fieldKeys = computed(() => {
-  return Object.assign({}, defaultOptionKeys, props.optionKeys)
-})
+const formItemContext = useFormItemContext()
 
 const innerValue = ref(props.modelValue || [])
 
